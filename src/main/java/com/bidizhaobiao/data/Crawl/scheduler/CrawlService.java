@@ -124,7 +124,16 @@ public class CrawlService {
             crawlerTimerLogDao.save(timerLog);
             //插入本项目所有的爬虫配置，获取该定时器所有的爬虫
             if (startCrawlList.size() == 0) {
-                startCrawlList = fileReadUtil.selectConfig();
+//                startCrawlList = fileReadUtil.selectConfig();
+//                startCrawlList.add("DX010946_ZhaobGgService");
+//                startCrawlList.add("SJ_09655_ZhaobGgService");
+//                startCrawlList.add("DX010948_ZhaobGgService");
+//                startCrawlList.add("DX010949_ZhaobGgService");
+//                startCrawlList.add("DX010946_ZhongbXxService");
+//                startCrawlList.add("DX010950_ZhaobGgService");
+//                startCrawlList.add("DX010951_ZhaobGgService");
+//                startCrawlList.add("XX7213_ZhaobGgService");
+                startCrawlList.add("XX7214_ZhaobGgService");
                 //存储配置信息
                 insertConfig(startCrawlList);
             }
@@ -145,6 +154,11 @@ public class CrawlService {
 
             // 创建集合用于存放符合启动条件的爬虫
             List<NeedStartSpider> needStartList = new ArrayList<NeedStartSpider>();
+//            NeedStartSpider needStSpider = new NeedStartSpider();
+//            needStSpider.setClassName("DX010946_ZhaobGgService");
+//            needStSpider.setCrawlStartTime(new Date());
+//            needStSpider.setCrawlType(1);
+//            needStartList.add(needStSpider);
             /*
             爬虫的启动类型分为3种：1，新增接口，则需要跑全量，一直跑到2016年的数据，则全量结束
                                 2：增量启动，跑到连续3页无数据入库，则停止，按照启动周期，启动
@@ -152,6 +166,7 @@ public class CrawlService {
                                    校验周期，默认为1个小时，若当次启动无数据，则在当前的校验周期+10，最大为1小时
                                             若当次启动有数据，则当前的校验周期-10，最小为10分钟。
              */
+            //TODO
             for (final CrawlerConfig crawlerConfig : crawlListInfoList) {
                 // 判断爬虫是否符合条件将其放入集合
                 int crawlType = crawlerConfig.getCrawlType();
@@ -159,32 +174,32 @@ public class CrawlService {
                 String className = crawlerConfig.getCrawlClass();
                 configMap.put(className, crawlerConfig);
                 //如果是全量，则类型匹配便可以启动
-                if ((warName.contains("total") && crawlType == 0)) {
+//                if ((warName.contains("total") && crawlType == 0)) {
                     NeedStartSpider needStartSpider = new NeedStartSpider();
                     needStartSpider.setClassName(className);
                     needStartSpider.setCrawlStartTime(new Date());
                     needStartSpider.setCrawlType(crawlType);
                     needStartList.add(needStartSpider);
-                } else if ((!warName.contains("total")) && crawlType == 1) {
-                    //如果是普通增量启动，则判断启动时间是否符合条件
-                    NeedStartSpider needStartSpider = new NeedStartSpider();
-                    if (checkTime != null) {
-                        //判断是否到达校验时间，保证每隔15分钟都有校验,只有增量才会有
-                        Date checkDate = df.parse(checkTime);
-                        if (checkDate.before(new Date())) {
-                            needStartSpider.setClassName(className);
-                            needStartSpider.setCrawlStartTime(checkDate);
-                            needStartSpider.setCrawlType(1);
-                            needStartList.add(needStartSpider);
-                        }
-                    } else if (checkTime == null) {
-                        // 如果未校验过，切不符合启动条件，则校验
-                        needStartSpider.setClassName(className);
-                        needStartSpider.setCrawlStartTime(new Date());
-                        needStartSpider.setCrawlType(1);
-                        needStartList.add(needStartSpider);
-                    }
-                }
+//                } else if ((!warName.contains("total")) && crawlType == 1) {
+//                    //如果是普通增量启动，则判断启动时间是否符合条件
+//                    NeedStartSpider needStartSpider = new NeedStartSpider();
+//                    if (checkTime != null) {
+//                        //判断是否到达校验时间，保证每隔15分钟都有校验,只有增量才会有
+//                        Date checkDate = df.parse(checkTime);
+//                        if (checkDate.before(new Date())) {
+//                            needStartSpider.setClassName(className);
+//                            needStartSpider.setCrawlStartTime(checkDate);
+//                            needStartSpider.setCrawlType(1);
+//                            needStartList.add(needStartSpider);
+//                        }
+//                    } else if (checkTime == null) {
+//                        // 如果未校验过，切不符合启动条件，则校验
+//                        needStartSpider.setClassName(className);
+//                        needStartSpider.setCrawlStartTime(new Date());
+//                        needStartSpider.setCrawlType(1);
+//                        needStartList.add(needStartSpider);
+//                    }
+//                }
             }
 
 

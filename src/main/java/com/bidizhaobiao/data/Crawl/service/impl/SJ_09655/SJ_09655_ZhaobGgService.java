@@ -133,14 +133,16 @@ public class SJ_09655_ZhaobGgService extends SpiderService implements PageProces
                             branchNew.setDate(date);
                             branchNew.setDetailLink(link);
                             branchNew.setTitle(title);
+                            map.put(link, branchNew);
+                            page.addTargetRequest(link);
                             detailList.add(branchNew);
                         }
                         // 校验数据
-                        List<BranchNew> branchNewList = checkData(detailList, serviceContext);
-                        for (BranchNew branch : branchNewList) {
-                            map.put(branch.getLink(), branch);
-                            page.addTargetRequest(branch.getLink());
-                        }
+//                        List<BranchNew> branchNewList = checkData(detailList, serviceContext);
+//                        for (BranchNew branch : branchNewList) {
+//                        map.put(link, branchNew);
+//                            page.addTargetRequest(branch.getLink());
+//                        }
                     } else {
                         dealWithNullListPage(serviceContext);
                     }

@@ -30,12 +30,14 @@ public class AreaDao {
     }
 
     public List<PosOfProclamation> findByCity(String city) {
-        String sql = "select REGION,PROVINCE,CITY,DISTRICT from BXKC_DATA_MONITOR.\"SYS_AREA_old\" where CITY = ? and DISTRICT = '无'";
+//        String sql = "select REGION,PROVINCE,CITY,DISTRICT from BXKC_DATA_MONITOR.\"SYS_AREA_old\" where CITY = ? and DISTRICT = '无'";
+        String sql = "select REGION,PROVINCE,CITY,DISTRICT from BXKC.\"SYS_AREA_old\" where CITY = ? and DISTRICT = '无'";
         return jdbcTemplate.query(sql, new AreaRowMapper(), city);
     }
 
     public List<PosOfProclamation> findByProvince(String province) {
-        String sql = "select REGION,PROVINCE,CITY,DISTRICT from BXKC_DATA_MONITOR.\"SYS_AREA_old\" where PROVINCE = ? and DISTRICT = '无' and CITY = '无'";
+//        String sql = "select REGION,PROVINCE,CITY,DISTRICT from BXKC_DATA_MONITOR.\"SYS_AREA_old\" where PROVINCE = ? and DISTRICT = '无' and CITY = '无'";
+        String sql = "select REGION,PROVINCE,CITY,DISTRICT from BXKC.\"SYS_AREA_old\" where PROVINCE = ? and DISTRICT = '无' and CITY = '无'";
         return jdbcTemplate.query(sql, new AreaRowMapper(), province);
     }
 
